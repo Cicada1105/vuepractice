@@ -12,18 +12,24 @@
 	<body>
 	
 	<div id="app">
-		<span v-bind:class="{special:true, important:isImportant}">
+		<span v-bind:class="{special:isSpecial, important:isImportant}">
 			look at me!
 		</span>
 	</div>
 	
 	<script>
-	var app = new Vue({
-		el: '#app',
-		data:{
-			isImportant:true
-		}
-	});
+		const { createApp } = Vue;
+
+		const app = createApp({
+			data() {
+				return {
+					isImportant: Math.floor(Math.random() * 2), // Expression will be 0 (falsey) or 1 (truthy)
+					isSpecial: Math.floor(Math.random() * 2)
+				}
+			}
+		});
+
+		app.mount("#app");
 	</script>
 	
 		<!--
