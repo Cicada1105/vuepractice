@@ -8,32 +8,53 @@
 			.special {background:yellow; border: 1px dotted #fe0000; padding:30px; display:block; text-align:center;}
 			.important {font-weight:bold; font-size:30px;}
 		</style>
-	</head>
+	</head> 
 	<body>
 	
 	<div id="app">
-		<span v-if="profile">
-			Profile of {{profile.fname}} {{profile.lname}} 
-		</span>
+		<div v-if="profile">
+			<p>Profile of {{profile.fname}} {{profile.lname}}</p>
+
+			<b>Age:</b> {{ profile.age }} <br />
+
+			<span v-if="profile.bio">
+				<b>Bio:</b> {{ profile.bio }}
+			</span>
+
+			<div v-if="profile.img">
+				<img :src="profile.img.src" :alt="profile.img.alt" width=100 />
+			</div>
+			<div v-else>
+				<img :src="defaultProfileImg.src" :alt="defaultProfileImg.alt" width=100 />
+			</div>
+		</div>
 		<span v-else>
 			No Profile Data found.
 		</span>
 	</div>
 	
 	<script>
-	var app = new Vue({
-		el: '#app',
-		
-		data:{
-			/*
-			profile:{
-				fname: "John",
-				lname: "Doe"	
+		const { createApp } = Vue;
+
+		const app = createApp({
+			data() {
+				return {
+					profile:{
+						fname: "Josh",
+						lname: "Colvin",
+						bio: "Loves coding and exercise",
+						age: 24
+					},
+					defaultProfileImg: {
+						src: "https://kempenfeltplayers.com/wp-content/uploads/2015/07/profile-icon-empty.png",
+						alt: "No Profile Image"
+					}
+				}
 			}
-			*/
-		}
-		
-	});
+		});
+
+		// Mount application
+		app.mount("#app");
 	</script>
 	
 		<!--
