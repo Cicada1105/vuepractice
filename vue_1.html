@@ -6,6 +6,7 @@
 		<script src="https://unpkg.com/vue@3"></script>
 		<style>
 			.container{background:#cecece;}
+			.highlight{border: 2px solid yellow;}
 		</style>
 	</head>
 	<body>
@@ -38,24 +39,29 @@
 			1. Create an image and set the following attributes with Vue {src, alt, title}
 			2. Augment the span below to include another class called "highlight", which has a yellow border.
 		-->
-		<span v-bind:class="loadClass">
+		<span :class="[loadClass, loadBorder]">
 			look at me!
 		</span>
+		<img :src="imgSrc" :alt="imgAlt" :title="imgTitle" />
 	</div>
 	
 	<script>
-	var app = new Vue({
+		const { createApp } = Vue;
+
+		const app = createApp({
+			data() {
+				return {
+					loadClass: 'container',
+					loadBorder: 'highlight',
+					imgSrc: '',
+					imgAlt: 'Man profile image',
+					imgTitle: 'Man Smiling'
+				}
+			}
+		});
+
 		//Bind Vue object to HTML element through query selector
-		el: '#app',
-		data:{
-			loadClass : 'container',
-			//newStyle : 'font-size:30px;',
-			//newAlt : 'dynamically set alt!'
-			
-		}
-	});
-	
-	
+		app.mount('#app');
 	
 	</script>
 	</body>
