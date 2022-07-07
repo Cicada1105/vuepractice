@@ -11,50 +11,56 @@
 	<body>
 	
 	<div id="app">
-		<orb v-bind:radius="40" v-bind:color="'white'"></orb>
+		<orb v-bind:radius="40" v-bind:color="'white'" :x="10" :y="10"></orb>
 		<orb 
 			v-for="orb in orbs"
-			v-bind:radius="orb.radius"
-			v-bind:color="orb.color"
-			v-bind:key="orb.id">
+			:radius="orb.radius"
+			:color="orb.color"
+			:x="orb.x"
+			:y="orb.y"
+			:key="orb.id">
 		</orb>
 	</div>
 	
 	<script>
-	Vue.component('orb',{
-		props:['radius','color'],	
-		template:
-		`<span 
-			v-bind:class="'circle'" 
-			v-bind:style="{'width':radius+'px', 'height':radius+'px', 'background':color}"
-			v-on:click="prompt();">
-		</span>`,
-		methods:{
-			prompt:function(){
-				alert('You clicked the '+this.color+' circle!');	
-				this.color='none';
-			}	
-		}
-	
-	});
-	
-	var app = new Vue({
-		el: '#app',
+		const { createApp } = Vue;
+
+		const app = createApp({
+			data() {
+				return {
+					orbs:[
+						{id:1, radius:10, color:'green', x:250, y:100},
+						{id:2, radius:15, color:'purple', x:450, y:50},
+						{id:3, radius:20, color:'black', x:50, y:450},
+						{id:4, radius:25, color:'blue', x:300, y:300},
+						{id:5, radius:30, color:'orange', x:150, y:525},
+						{id:6, radius:35, color:'yellow', x:400, y:250},
+						{id:7, radius:45, color:'red', x:550, y:350}
+					]
+				}
+			}
+		});
+
+
+		app.component('orb',{
+			props:['radius','color','x','y'],	
+			template:
+			`<span 
+				:class="'circle'" 
+				:style="{position:'absolute',left: x+'px', top: y+'px', width:radius+'px', height:radius+'px', background:color}"
+				@click="prompt();">
+			</span>`,
+			methods:{
+				prompt(){
+					alert('You clicked the '+this.color+' circle!');	
+					this.color='none';
+				}	
+			}
 		
-		data:{
-			orbs:[
-				{id:1, radius:10, color:'green'},
-				{id:2, radius:15, color:'purple'},
-				{id:3, radius:20, color:'black'},
-				{id:4, radius:25, color:'blue'},
-				{id:5, radius:30, color:'orange'},
-				{id:6, radius:35, color:'yellow'},
-				{id:7, radius:45, color:'red'}
-			]
-		},
-		
-		
-	});
+		});
+
+		// Mount application
+		app.mount("#app");
 	</script>
 	<!--
 		Step 1: Run the code above!
