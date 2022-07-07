@@ -9,52 +9,46 @@
 		</style>
 	</head>
 	<body>
-	<p>Dog Treats Problem. <a href="https://cemc.uwaterloo.ca/contests/computing/2020/index.html">from the J1 problem hosted by the CCC.</a></p>
+	<p>Cupcake Party. <a href="https://cemc.uwaterloo.ca/contests/computing/2022/ccc/juniorEF.pdf">from the J1 problem hosted by the CCC.</a></p>
 	<div id="app">
 		<div class="formfield">
-			<label>Small Treats: <label> <input v-model="treat_qty_small">
+			<label>Regular Boxes: <label> <input v-model="cupcake_qty_medium">
 		</div>
 		<div class="formfield">
-			<label>Medium Treats: <label> <input v-model="treat_qty_medium">
-		</div>
-		<div class="formfield">
-			<label>Large Treats: <label> <input v-model="treat_qty_large">
+			<label>Small Boxes: <label> <input v-model="cupcake_qty_small">
 		</div>
 		<div id="result">
-			<div><label>show diagnostics:</label><input type="checkbox" v-model="treat_diagnostics"></div>
-			<div v-if="treat_diagnostics">Treat Total: {{treat_total}}</div>
-			<div v-if="treat_diagnostics">Is_Happy: {{is_happy}}</div>
-			<span v-if="is_happy">{{dog_name}} is Happy!</span>
-			<span v-else>{{dog_name}} is sad..</span>
+			<div><label>Display results:</label><input type="checkbox" v-model="display_results"></div>
+			<div v-if="display_results">Total Cupcakes: {{ cupcake_total }}</div>
+			<div v-if="display_results">Total Remaining: {{ cupcakes_remaining }}</div> 
 		</div>
 	</div>
 	
 	<script>
-	var app = new Vue({
-		el: '#app',
-		data:{
-			treat_diagnostics:false,
-			dog_name:"Barley",
-			treat_qty_small:0,
-			treat_qty_medium:0,
-			treat_qty_large:0,
-			treat_value_small:1,
-			treat_value_medium:2,
-			treat_value_large:3
-		},
-		computed:{
-			treat_total:function(){
-				return (this.treat_qty_small * this.treat_value_small) + 
-				(this.treat_qty_medium * this.treat_value_medium) + 
-				(this.treat_qty_large * this.treat_value_large);	
+		const { createApp } = Vue;
+
+		const app = createApp({
+			data() {
+				return {
+					display_results:false,
+					cupcake_qty_medium:0,
+					cupcake_qty_small:0,
+					cupcake_value_medium:8,
+					cupcake_value_small:3,
+					total_students:28
+				}
 			},
-			is_happy:function(){
-				
-				return this.treat_total>=10;	
+			computed: {
+				cupcake_total:function(){
+					return (this.cupcake_qty_medium * this.cupcake_value_medium) + (this.cupcake_qty_small * this.cupcake_value_small);
+				},
+				cupcakes_remaining:function(){	
+					return this.cupcake_total - this.total_students;
+				}
 			}
-		}
-	});
-	
+		});
+
+		app.mount("#app");
 	</script>
 	<!--
 		v-model will allow you to quickly bind form elements to the data property.
